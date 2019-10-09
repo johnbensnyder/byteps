@@ -1,0 +1,21 @@
+FROM nvcr.io/nvidia/tensorflow:19.09-py3
+
+ENV CUDA_VERSION=10.1
+
+ENV BYTEPS_BASE_PATH /usr/local
+ENV BYTEPS_PATH $BYTEPS_BASE_PATH/byteps
+ENV BYTEPS_GIT_LINK https://github.com/bytedance/byteps
+
+RUN apt-get update &&\
+    apt-get -y install python-pip &&\
+    pip install --upgrade pip
+
+RUN cd $BYTEPS_BASE_PATH &&\
+    git clone --recurse-submodules $BYTEPS_GIT_LINK
+
+ARG BYTEPS_NCCL_LINK=shared
+RUN cd $BYTEPS_PATH &&\
+    BYTEPS_WITHOUT_PYTORCH=1 python setup.py install &&\
+    BYTEPS_WITHOUT_PYTORCH=1 python setup.py bdist_wheel
+
+
