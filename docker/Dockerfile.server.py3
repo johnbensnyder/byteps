@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ENV LD_LIBRARY_PATH /root/incubator-mxnet/lib/:/usr/local/lib:$LD_LIBRARY_PATH
 
