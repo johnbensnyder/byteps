@@ -36,9 +36,14 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
         iftop \
         lsb-release
 
+RUN rm -f /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
+
 RUN apt-get update &&\
-    apt-get -y install python-pip &&\
-    pip install --upgrade pip
+    apt-get -y install python3-pip &&\
+    pip3 install --upgrade pip
+
+RUN rm -f /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
+RUN rm -f /usr/bin/pip && ln -s /usr/bin/pip3 /usr/bin/pip
 
 RUN pip --no-cache-dir install \
         matplotlib \
