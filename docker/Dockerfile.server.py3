@@ -1,3 +1,5 @@
+# docker build -t johnbensyder/byteps_server_py3:0.0.0-a -f Dockerfile.server.py3 .
+
 FROM ubuntu:18.04
 
 ENV LD_LIBRARY_PATH /root/incubator-mxnet/lib/:/usr/local/lib:$LD_LIBRARY_PATH
@@ -10,6 +12,8 @@ ENV MXNET_SERVER_LINK https://github.com/bytedance/incubator-mxnet
 ENV BYTEPS_BASE_PATH /usr/local
 ENV BYTEPS_PATH $BYTEPS_BASE_PATH/byteps
 ENV BYTEPS_GIT_LINK https://github.com/bytedance/byteps
+ENV TZ=America/Los_Angeles
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-packages --no-install-recommends \
         build-essential \
