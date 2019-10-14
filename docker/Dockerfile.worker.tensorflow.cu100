@@ -127,8 +127,8 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 200 && \
 # Install BytePS
 ARG BYTEPS_NCCL_LINK=shared
 RUN cd $BYTEPS_PATH &&\
-    BYTEPS_WITHOUT_PYTORCH=1 python setup.py install &&\
-    BYTEPS_WITHOUT_PYTORCH=1 python setup.py bdist_wheel
+    BYTEPS_WITHOUT_PYTORCH=1 BYTEPS_WITHOUT_MXNET=1 python setup.py install &&\
+    BYTEPS_WITHOUT_PYTORCH=1 BYTEPS_WITHOUT_MXNET=1 python setup.py bdist_wheel
 
 # Remove GCC pinning
 RUN update-alternatives --remove gcc /usr/bin/gcc-4.9 && \
