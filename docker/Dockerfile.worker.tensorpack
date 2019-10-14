@@ -2,6 +2,9 @@
 
 FROM bytepsimage/worker_tensorflow
 
+RUN apt-get update && \
+	apt-get install zip
+
 ENV BYTEPS_BASE_PATH /usr/local
 ENV BYTEPS_PATH $BYTEPS_BASE_PATH/byteps
 ENV BYTEPS_GIT_LINK https://github.com/bytedance/byteps
