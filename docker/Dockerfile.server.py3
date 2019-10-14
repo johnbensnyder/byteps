@@ -11,7 +11,7 @@ ENV MXNET_SERVER_LINK https://github.com/bytedance/incubator-mxnet
 
 ENV BYTEPS_BASE_PATH /usr/local
 ENV BYTEPS_PATH $BYTEPS_BASE_PATH/byteps
-ENV BYTEPS_GIT_LINK https://github.com/bytedance/byteps
+ENV BYTEPS_GIT_LINK https://github.com/johnbensnyder/byteps
 ENV TZ=America/Los_Angeles
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
