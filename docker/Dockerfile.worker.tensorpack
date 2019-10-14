@@ -1,0 +1,20 @@
+FROM bytepsimage/worker_tensorflow
+
+ENV BYTEPS_BASE_PATH /usr/local
+ENV BYTEPS_PATH $BYTEPS_BASE_PATH/byteps
+ENV BYTEPS_GIT_LINK https://github.com/bytedance/byteps
+
+RUN pip uninstall -y tensorflow byteps
+
+RUN wget https://github.com/aws-samples/mask-rcnn-tensorflow/releases/download/v0.0.0/tensorflow-1.12.3-cp36-cp36m-linux_x86_64.whl && \
+	pip install tensorflow-1.12.3-cp36-cp36m-linux_x86_64.whl
+
+# Install BytePS
+ARG BYTEPS_NCCL_LINK=shared
+RUN cd $BYTEPS_PATH &&\
+    BYTEPS_WITHOUT_PYTORCH=1 BYTEPS_WITHOUT_MXNET=1 python setup.py install &&\
+    BYTEPS_WITHOUT_PYTORCH=1 BYTEPS_WITHOUT_MXNET=1 python setup.py bdist_wheel
+
+RUN git clone -b nhwc https://github.com/aws-samples/mask-rcnn-tensorflow/ && \
+	cd mask-rcnn-tensorflow && \
+	python setup.py install
