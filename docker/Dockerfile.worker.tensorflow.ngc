@@ -28,7 +28,7 @@ RUN pip install --ignore-installed numpy==1.16.2
 
 WORKDIR /
 
-RUN git clone https://github.com/aws-samples/mask-rcnn-tensorflow.git -b nhwc
+RUN git clone https://github.com/johnbensnyder/mask-rcnn-tensorflow.git
 
 RUN chmod -R +w /mask-rcnn-tensorflow
 RUN pip install --ignore-installed -e /mask-rcnn-tensorflow
