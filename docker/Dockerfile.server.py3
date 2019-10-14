@@ -1,4 +1,4 @@
-# docker build -t johnbensyder/byteps_server_py3:0.0.0-a -f Dockerfile.server.py3 .
+# docker build -t johnbensnyder/byteps_server_py3:0.0.0-a -f Dockerfile.server.py3 .
 
 FROM ubuntu:18.04
 
@@ -70,3 +70,6 @@ RUN cd $BYTEPS_SERVER_MXNET_PATH && \
 
 RUN cd $BYTEPS_BASE_PATH &&\
     git clone --recurse-submodules $BYTEPS_GIT_LINK
+
+RUN apt-get install -y git && \
+	git clone openmpi
