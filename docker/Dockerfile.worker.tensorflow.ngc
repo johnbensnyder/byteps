@@ -13,6 +13,8 @@ RUN awk 'NR==59 {$0="export TF_CUDA_COMPUTE_CAPABILITIES=\"7.0\""} { print }' nv
 	awk 'NR==62 {$0="export CC_OPT_FLAGS=\"-march=native\""} { print }' nvbuild_1.sh > nvbuild_new.sh && \
 	rm nvbuild_1.sh
 
+RUN chmod +x nvbuild_new.sh
+
 RUN ./nvbuild_new.sh --python3.6
 
 RUN apt-get update && \
