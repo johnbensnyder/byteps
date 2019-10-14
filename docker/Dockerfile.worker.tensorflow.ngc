@@ -2,6 +2,35 @@
 
 FROM nvcr.io/nvidia/tensorflow:19.09-py3
 
+WORKDIR /opt/tensorflow
+
+RUN cd tensorflow-source && \
+	wget https://github.com/aws-samples/mask-rcnn-tensorflow/releases/download/v0.0.0/SizeFix.patch && \
+	patch -p1 < SizeFix.patch && \
+	cd ..
+
+RUN awk 'NR==59 {$0="export TF_CUDA_COMPUTE_CAPABILITIES=\"7.0\""} { print }' nvbuild.sh > nvbuild_1.sh && \
+	awk 'NR==62 {$0="export CC_OPT_FLAGS=\"-march=native\""} { print }' nvbuild_1.sh > nvbuild_new.sh && \
+	rm nvbuild_1.sh
+
+RUN ./nvbuild_new.sh --python3.6
+
+RUN apt-get update && \
+    apt-get install -y libsm6 libxext6 libxrender-dev && \
+    pip install opencv-python
+
+RUN pip uninstall -y numpy && \
+    pip uninstall -y numpy
+
+RUN pip install --ignore-installed numpy==1.16.2
+
+WORKDIR /
+
+RUN git clone https://github.com/aws-samples/mask-rcnn-tensorflow.git -b nhwc
+
+RUN chmod -R +w /mask-rcnn-tensorflow
+RUN pip install --ignore-installed -e /mask-rcnn-tensorflow
+
 ENV CUDA_VERSION=10.1
 
 ENV BYTEPS_BASE_PATH /usr/local
@@ -15,5 +44,11 @@ ARG BYTEPS_NCCL_LINK=shared
 RUN cd $BYTEPS_PATH &&\
     BYTEPS_WITHOUT_PYTORCH=1 python setup.py install &&\
     BYTEPS_WITHOUT_PYTORCH=1 python setup.py bdist_wheel
+
+RUN apt update && \
+    apt upgrade -y && \
+    apt install -y openssh-server
+
+RUN mkdir -p /var/run/sshd
 
 
