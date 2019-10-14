@@ -71,5 +71,3 @@ RUN cd $BYTEPS_SERVER_MXNET_PATH && \
 RUN cd $BYTEPS_BASE_PATH &&\
     git clone --recurse-submodules $BYTEPS_GIT_LINK
 
-RUN apt-get install -y git && \
-	git clone openmpi
