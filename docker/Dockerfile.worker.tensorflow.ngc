@@ -6,7 +6,7 @@ ENV CUDA_VERSION=10.1
 
 ENV BYTEPS_BASE_PATH /usr/local
 ENV BYTEPS_PATH $BYTEPS_BASE_PATH/byteps
-ENV BYTEPS_GIT_LINK https://github.com/bytedance/byteps
+ENV BYTEPS_GIT_LINK https://github.com/johnbensnyder/byteps
 
 RUN cd $BYTEPS_BASE_PATH &&\
     git clone --recurse-submodules $BYTEPS_GIT_LINK
