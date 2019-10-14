@@ -3,7 +3,7 @@
 FROM bytepsimage/worker_tensorflow
 
 RUN apt-get update && \
-	apt-get install zip
+	apt-get install -y zip
 
 ENV BYTEPS_BASE_PATH /usr/local
 ENV BYTEPS_PATH $BYTEPS_BASE_PATH/byteps
